@@ -109,24 +109,23 @@ function displayAnswers(){
 
 function userSelection(i){
   currentQuestion.userAnswer = currentQuestion.answers[i];
-  console.log(currentQuestion.correctAnswer);
-  console.log(currentQuestion.userAnswer);
 }
 
 function checkAnswer(){
   if (currentQuestion.correctAnswer == currentQuestion.userAnswer){
     currentQuestion.isCorrect = !currentQuestion.isCorrect;
   }
+  console.log(currentQuestion);
+  collectGameStatus();
 }
 
 function collectGameStatus(){
-
+  gameStatus.push(currentQuestion);
+  console.table(gameStatus);
 }
 
 // test button to dispaly quesiton.
 $(document).on("click","#buttonTest", function(){
-  console.log("buttonClicked");
-
   $("#questionColumn").remove();
   $("#answersColumn").remove();
 
@@ -140,6 +139,7 @@ $(document).on("click", ".answers", function(){
   var selectedAnswer = $(this).attr("id");
   selectedAnswer = parseInt(selectedAnswer.charAt(6));
   userSelection(selectedAnswer);
+  checkAnswer();
   console.log(selectedAnswer);
 });
 
