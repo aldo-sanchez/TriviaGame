@@ -100,7 +100,7 @@ function displayAnswers(){
     answersText.appendTo(answersColumnDiv);
     answersColumnDiv.appendTo(answersRowDiv)
     answersRowDiv.appendTo(mainAnswersColumn);
-    mainAnswersColumn.appendTo("#answersRow")
+    mainAnswersColumn.appendTo("#answersRow");
   };
 }
 
