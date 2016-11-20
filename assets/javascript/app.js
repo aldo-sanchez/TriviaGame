@@ -8,45 +8,16 @@ var player = {
   losses: 0
 }
 
-var questionsArray = [];
-var currentQuestion;
-
-
-$(document).ready(function(){
-  initialization();
-  questionsArray = createQuestionArray();
-  
-});
-
-function initialization(){
-  player.isPlaying = !player.isPlaying;
+function questionObject(question, answers, correctAnswer, userAnswer, isCorrect, isTimeUp){
+  this.question = question;
+  this.answers = answers;
+  this.correctAnswer = this.answers[correctAnswer];
+  this.userAnswer = this.answers[userAnswer];
+  this.isCorrect = isCorrect;
+  this.isTimeUp = isTimeUp;
 }
 
-function createQuestionArray(){
-  function questionObject(question, answers, correctAnswer, userAnswer, isCorrect, isTimeUp){
-    this.question = question;
-    this.answers = answers;
-    this.correctAnswer = this.answers[correctAnswer];
-    this.userAnswer = this.answers[userAnswer];
-    this.isCorrect = isCorrect;
-    this.isTimeUp = isTimeUp;
-  }
-
-  var question1 = new questionObject("What is the capital of the US?", ["Washington DC", "Dallas", "Houston", "Los Angeles", null], 0, 4, false, false);
-
-  var question2 = new questionObject("What is the capital of Mexico?", ["Guadalajara", "Mexico City", "Monterrey", "Ciudad Juarez", null], 0, 4, false, false);
-
-  return questionsArray = [question1, question2];
-}
-
-function selectRandomQuestion(){
-  var randomIndex = Math.floor(Math.random()*questionsArray.length);
-  currentQuestion = questionsArray[randomIndex];
-
-  // remove question from array.  
-  questionsArray.splice(randomIndex,1);
-}
-
+<<<<<<< HEAD
 function displayQuestion(){
 var mainQuestionColumn = $("<div></div>");
   mainQuestionColumn.attr({
@@ -109,9 +80,8 @@ $(document).on("click","#buttonTest", function(){
 
   $("#questionColumn").remove();
   $("#answersColumn").remove();
+=======
+var question1 = new questionObject("What is the capital of the US", ["Washington DC", "Dallas", "Houston", "Los Angeles"], 0, 4, false, false);
+>>>>>>> parent of 2b4b1a3... :constructio C correctly display question and answers
 
-  selectRandomQuestion();
-  displayQuestion();
-  displayAnswers();
-})
- 
+var question2 = new questionObject("What is the capital of Mexico", ["Guadalajara", "Mexico City", "Monterrey", "Ciudad Juarez"], 0, 4, false, false);
