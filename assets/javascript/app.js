@@ -179,8 +179,14 @@ function setUserSelection(){
 
 function summarizeQuesiton(){
   if (currentQuestion.isCorrect){
-    console.log("Good job! You answered correctly! " + currentQuestion.correctAnswer);
-  } else{console.log("Wrong answer...the correct answer is: " + currentQuestion.correctAnswer)};
+    $(".modal-title").text("Good Job! You answered correctly!");
+    $(".modal-body").text(currentQuestion.correctAnswer);
+    // console.log("Good job! You answered correctly! " + currentQuestion.correctAnswer);
+  } else{
+    $(".modal-title").text("Wrong answer... The correct answer is:")
+    $(".modal-body").text(currentQuestion.correctAnswer);
+    // console.log("Wrong answer...the correct answer is: " + currentQuestion.correctAnswer)};
+  }
 }
 
 function displaySummaryQuestion(){
