@@ -2,6 +2,7 @@ console.log("trivia!");
 
 var player = {
   isPlaying: false,
+  isWaiting: false,
   questionCorrect: 0,
   questionIncorrect: 0,
   wins: 0,
@@ -11,8 +12,8 @@ var player = {
 var questionsArray = [];
 var currentQuestion;
 var gameStatus = [];
-var timer;
-
+var questionTimer;
+var summaryTimer;
 
 $(document).ready(function(){
   initialization();
@@ -44,24 +45,37 @@ function createQuestionArray(){
   return questionsArray = [question1, question2, question3];
 }
 
-function startTimer(){
-  timer = setTimeout(timeRanOut,5000);
+function startQuestionTimer(){
+  questionTimer = setTimeout(questionTimeRanOut,20000);
 }
 
-function stopTimer(){
-  clearTimeout(timer);
+function startSummaryTimer(){
+  player.isWaiting = !player.isWaiting;
+  summaryTimer = setTimeout(setQuestionAnswers,10000);
+
 }
 
-function timeRanOut(){
+function stopQuestionTimer(){
+  clearTimeout(questionTimer);
+}
+
+function stopSummaryTimer(){
+  clearTimeout(summaryTimer);
+}
+
+function questionTimeRanOut(){
+  
   currentQuestion.isTimeUp = !currentQuestion.isTimeUp;
   console.log("time ran out!" + currentQuestion.isTimeUp + currentQuestion.userAnswer)
-  collectGameStatus();
-  setQuestionAnswers();
+  setUserSelection();
 }
 
 function setQuestionAnswers(){
   $("#questionColumn").remove();
   $("#answersColumn").remove();
+  if (player.isWaiting){
+    player.isWaiting = !player.isWaiting;
+  }
 
   selectRandomQuestion();
   displayQuestion();
@@ -150,23 +164,34 @@ function collectGameStatus(){
   console.table(gameStatus);
 }
 
+function setUserSelection(){
+  checkAnswer();
+  collectGameStatus();
+  stopQuestionTimer();
+  summarizeQuesiton();
+  startSummaryTimer();
+}
+
+function summarizeQuesiton(){
+  if (currentQuestion.isCorrect){
+    console.log("Good job! You answered correctly! " + currentQuestion.correctAnswer);
+  } else{console.log("Wrong answer...the correct answer is: " + currentQuestion.correctAnswer)};
+}
+
 // test button to dispaly quesiton.
 $(document).on("click","#startGameButton", function(){
   setQuestionAnswers();
-  startTimer();
+  startQuestionTimer();
   $("#startGameButton").hide();
 });
 
 $(document).on("click", ".answers", function(){
-  console.log($(this).attr("id"));
-  var selectedAnswer = $(this).attr("id");
-  selectedAnswer = parseInt(selectedAnswer.charAt(6));
-  userSelection(selectedAnswer);
-  checkAnswer();
-  collectGameStatus();
-  stopTimer();
-  setQuestionAnswers();
-
-  console.log(selectedAnswer);
+  if (!player.isWaiting){
+    console.log($(this).attr("id"));
+    var selectedAnswer = $(this).attr("id");
+    selectedAnswer = parseInt(selectedAnswer.charAt(6));
+    userSelection(selectedAnswer);
+    setUserSelection();
+    console.log(selectedAnswer);
+  }
 });
-
