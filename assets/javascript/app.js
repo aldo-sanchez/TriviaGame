@@ -16,14 +16,12 @@ var questionTimer;
 var summaryTimer;
 
 $(document).ready(function(){
-  initialization();
-  questionsArray = createQuestionArray();
-  
-  
+  initialization();  
 });
 
 function initialization(){
   player.isPlaying = !player.isPlaying;
+  questionsArray = createQuestionArray();
 }
 
 function createQuestionArray(){
@@ -51,7 +49,7 @@ function startQuestionTimer(){
 
 function startSummaryTimer(){
   player.isWaiting = !player.isWaiting;
-  summaryTimer = setTimeout(setQuestionAnswers,5000);
+  summaryTimer = setTimeout(setQuestionAnswers,3000);
 
 }
 
@@ -166,10 +164,14 @@ function collectGameStatus(){
 }
 
 function setUserSelection(){
+  
   checkAnswer();
   collectGameStatus();
   stopQuestionTimer();
   summarizeQuesiton();
+  if (questionsArray.length == 0){
+   return endGame();
+  }
   startSummaryTimer();
 }
 
@@ -179,6 +181,13 @@ function summarizeQuesiton(){
   } else{console.log("Wrong answer...the correct answer is: " + currentQuestion.correctAnswer)};
 }
 
+function endGame(){
+  
+    console.log("game is over");
+    console.table(gameStatus);
+    player.isPlaying = !player.isPlaying;
+}
+
 $(document).on("click","#startGameButton", function(){
   setQuestionAnswers();
   // startQuestionTimer();
@@ -186,7 +195,7 @@ $(document).on("click","#startGameButton", function(){
 });
 
 $(document).on("click", ".answers", function(){
-  if (!player.isWaiting){
+  if (!player.isWaiting && player.isPlaying){
     console.log($(this).attr("id"));
     var selectedAnswer = $(this).attr("id");
     selectedAnswer = parseInt(selectedAnswer.charAt(6));
