@@ -46,12 +46,12 @@ function createQuestionArray(){
 }
 
 function startQuestionTimer(){
-  questionTimer = setTimeout(questionTimeRanOut,20000);
+  questionTimer = setTimeout(questionTimeRanOut,10000);
 }
 
 function startSummaryTimer(){
   player.isWaiting = !player.isWaiting;
-  summaryTimer = setTimeout(setQuestionAnswers,10000);
+  summaryTimer = setTimeout(setQuestionAnswers,5000);
 
 }
 
@@ -80,6 +80,7 @@ function setQuestionAnswers(){
   selectRandomQuestion();
   displayQuestion();
   displayAnswers();
+  startQuestionTimer();
 }
 
 
@@ -178,10 +179,9 @@ function summarizeQuesiton(){
   } else{console.log("Wrong answer...the correct answer is: " + currentQuestion.correctAnswer)};
 }
 
-// test button to dispaly quesiton.
 $(document).on("click","#startGameButton", function(){
   setQuestionAnswers();
-  startQuestionTimer();
+  // startQuestionTimer();
   $("#startGameButton").hide();
 });
 
