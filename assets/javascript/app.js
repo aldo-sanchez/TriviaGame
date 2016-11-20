@@ -11,11 +11,13 @@ var player = {
 var questionsArray = [];
 var currentQuestion;
 var gameStatus = [];
+var timer;
 
 
 $(document).ready(function(){
   initialization();
   questionsArray = createQuestionArray();
+  
   
 });
 
@@ -41,6 +43,31 @@ function createQuestionArray(){
 
   return questionsArray = [question1, question2, question3];
 }
+
+function startTimer(){
+  timer = setTimeout(timeRanOut,5000);
+}
+
+function stopTimer(){
+  clearTimeout(timer);
+}
+
+function timeRanOut(){
+  currentQuestion.isTimeUp = !currentQuestion.isTimeUp;
+  console.log("time ran out!" + currentQuestion.isTimeUp + currentQuestion.userAnswer)
+  collectGameStatus();
+  setQuestionAnswers();
+}
+
+function setQuestionAnswers(){
+  $("#questionColumn").remove();
+  $("#answersColumn").remove();
+
+  selectRandomQuestion();
+  displayQuestion();
+  displayAnswers();
+}
+
 
 function selectRandomQuestion(){
   var randomIndex = Math.floor(Math.random()*questionsArray.length);
@@ -116,7 +143,6 @@ function checkAnswer(){
     currentQuestion.isCorrect = !currentQuestion.isCorrect;
   }
   console.log(currentQuestion);
-  collectGameStatus();
 }
 
 function collectGameStatus(){
@@ -125,13 +151,10 @@ function collectGameStatus(){
 }
 
 // test button to dispaly quesiton.
-$(document).on("click","#buttonTest", function(){
-  $("#questionColumn").remove();
-  $("#answersColumn").remove();
-
-  selectRandomQuestion();
-  displayQuestion();
-  displayAnswers();
+$(document).on("click","#startGameButton", function(){
+  setQuestionAnswers();
+  startTimer();
+  $("#startGameButton").hide();
 });
 
 $(document).on("click", ".answers", function(){
@@ -140,6 +163,10 @@ $(document).on("click", ".answers", function(){
   selectedAnswer = parseInt(selectedAnswer.charAt(6));
   userSelection(selectedAnswer);
   checkAnswer();
+  collectGameStatus();
+  stopTimer();
+  setQuestionAnswers();
+
   console.log(selectedAnswer);
 });
 
