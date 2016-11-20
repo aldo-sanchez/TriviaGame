@@ -114,6 +114,12 @@ function userSelection(i){
 }
 
 function checkAnswer(){
+  if (currentQuestion.correctAnswer == currentQuestion.userAnswer){
+    currentQuestion.isCorrect = !currentQuestion.isCorrect;
+  }
+}
+
+function collectGameStatus(){
 
 }
 
