@@ -69,6 +69,7 @@ function questionTimeRanOut(){
 }
 
 function setQuestionAnswers(){
+  $("#myModal").modal("hide");
   $("#questionColumn").remove();
   $("#answersColumn").remove();
   if (player.isWaiting){
@@ -169,6 +170,7 @@ function setUserSelection(){
   collectGameStatus();
   stopQuestionTimer();
   summarizeQuesiton();
+  displaySummaryQuestion();
   if (questionsArray.length == 0){
    return endGame();
   }
@@ -179,6 +181,16 @@ function summarizeQuesiton(){
   if (currentQuestion.isCorrect){
     console.log("Good job! You answered correctly! " + currentQuestion.correctAnswer);
   } else{console.log("Wrong answer...the correct answer is: " + currentQuestion.correctAnswer)};
+}
+
+function displaySummaryQuestion(){
+  // $("#myModal").modal("show");
+  $("#myModal").modal({
+    display: "show",
+    // backdrop: "static",
+    // keyboard: false
+  });
+  
 }
 
 function endGame(){
