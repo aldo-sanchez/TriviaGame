@@ -3,8 +3,8 @@ console.log("trivia!");
 var player = {
   isPlaying: false,
   isWaiting: false,
-  questionCorrect: 0,
-  questionIncorrect: 0,
+  numberCorrect: 0,
+  numberIncorrect: 0,
   wins: 0,
   losses: 0
 }
@@ -49,8 +49,12 @@ function startQuestionTimer(){
 
 function startSummaryTimer(){
   player.isWaiting = !player.isWaiting;
-  summaryTimer = setTimeout(setQuestionAnswers,3000);
-
+  if (questionsArray.length > 0){
+   summaryTimer = setTimeout(setQuestionAnswers,3000);
+  }
+  else{
+    summaryTimer = setTimeout(endGame,3000);
+  }
 }
 
 function stopQuestionTimer(){
@@ -69,13 +73,10 @@ function questionTimeRanOut(){
 }
 
 function setQuestionAnswers(){
-  $("#myModal").modal("hide");
-  $("#questionColumn").remove();
-  $("#answersColumn").remove();
+  removeQuestionAnswers();
   if (player.isWaiting){
     player.isWaiting = !player.isWaiting;
   }
-
   selectRandomQuestion();
   displayQuestion();
   displayAnswers();
@@ -155,6 +156,10 @@ function userSelection(i){
 function checkAnswer(){
   if (currentQuestion.correctAnswer == currentQuestion.userAnswer){
     currentQuestion.isCorrect = !currentQuestion.isCorrect;
+    player.numberCorrect++;
+  }
+  else{
+    player.numberIncorrect++;
   }
   console.log(currentQuestion);
 }
@@ -165,45 +170,79 @@ function collectGameStatus(){
 }
 
 function setUserSelection(){
-  
   checkAnswer();
   collectGameStatus();
   stopQuestionTimer();
   summarizeQuesiton();
   displaySummaryQuestion();
-  if (questionsArray.length == 0){
-   return endGame();
-  }
-  startSummaryTimer();
+  startSummaryTimer(); 
 }
 
 function summarizeQuesiton(){
   if (currentQuestion.isCorrect){
     $(".modal-title").text("Good Job! You answered correctly!");
     $(".modal-body").text(currentQuestion.correctAnswer);
-    // console.log("Good job! You answered correctly! " + currentQuestion.correctAnswer);
+
   } else{
     $(".modal-title").text("Wrong answer... The correct answer is:")
     $(".modal-body").text(currentQuestion.correctAnswer);
-    // console.log("Wrong answer...the correct answer is: " + currentQuestion.correctAnswer)};
   }
 }
 
 function displaySummaryQuestion(){
-  // $("#myModal").modal("show");
-  $("#myModal").modal({
-    display: "show",
-    // backdrop: "static",
-    // keyboard: false
-  });
-  
+  $("#myModal").modal("show");  
+}
+
+function displayFinalSummary(){
+  var summaryColumn = $("<div></div>");
+  summaryColumn.addClass("col-md-12");
+  summaryColumn.attr("id", "summaryColumn");
+
+  var questionsCorrectRow = $("<div></div>");
+  questionsCorrectRow.addClass("col-md-12");
+  questionsCorrectRow.attr("id", "questionsCorrectRow");
+
+  var questionsCorrectColumn = $("<div></div>");
+  questionsCorrectColumn.addClass("col-md-12");
+  questionsCorrectColumn.attr("id", "questionsCorrect");
+  questionsCorrectText = $("<h2></h2>");
+
+  questionsCorrectText.text("Number of questions correct: " + player.numberCorrect);
+
+  questionsCorrectText.appendTo(questionsCorrectColumn);
+  questionsCorrectColumn.appendTo(questionsCorrectRow);
+  questionsCorrectRow.appendTo(summaryColumn);
+
+  var questionsIncorrectRow = $("<div></div>");
+  questionsIncorrectRow.addClass("col-md-12");
+  questionsIncorrectRow.attr("id", "questionsIncorrectRow");
+
+  var questionsIncorrectColumn = $("<div></div>");
+  questionsIncorrectColumn.addClass("col-md-12");
+  questionsIncorrectColumn.attr("id", "questionsIncorrect");
+  questionsIncorrectText = $("<h2></h2>");
+
+  questionsIncorrectText.text("Number of questions incorrect: " + player.numberIncorrect);
+
+  questionsIncorrectText.appendTo(questionsIncorrectColumn);
+  questionsIncorrectColumn.appendTo(questionsIncorrectRow);
+  questionsIncorrectRow.appendTo(summaryColumn);
+  summaryColumn.appendTo("#summaryRow");
 }
 
 function endGame(){
-  
+    removeQuestionAnswers();
+    displayFinalSummary();
     console.log("game is over");
     console.table(gameStatus);
     player.isPlaying = !player.isPlaying;
+}
+
+
+function removeQuestionAnswers(){
+  $("#myModal").modal("hide");
+  $("#questionColumn").remove();
+  $("#answersColumn").remove();
 }
 
 $(document).on("click","#startGameButton", function(){
