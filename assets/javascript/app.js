@@ -28,20 +28,21 @@ function initialization(){
 }
 
 function createQuestionArray(){
-  function questionObject(question, answers, correctAnswer, userAnswer, isCorrect, isTimeUp){
+  function questionObject(question, answers, correctAnswer, userAnswer, answerExplanation, isCorrect, isTimeUp){
     this.question = question;
     this.answers = answers;
     this.correctAnswer = this.answers[correctAnswer];
     this.userAnswer = this.answers[userAnswer];
+    this.answerExplanation = answerExplanation;
     this.isCorrect = isCorrect;
     this.isTimeUp = isTimeUp;
   }
 
-  var question1 = new questionObject("What is the capital of the US?", ["Washington DC", "Dallas", "Houston", "Los Angeles", null], 0, 4, false, false);
+  var question1 = new questionObject("What was the name of the first satellite of the United States?", ["Sputnik 1", "Explorer 1", "Vanguard 1", "Echo 1", null], 1, 4, "text explanation 4", false, false);
 
-  var question2 = new questionObject("What is the capital of Mexico?", ["Guadalajara", "Mexico City", "Monterrey", "Ciudad Juarez", null], 1, 4, false, false);
+  var question2 = new questionObject("What was the first animal in space?",["Dog", "Monkey", "Fruit Flies", "Mouse", null], 2, 4, "test explanation", false, false);
 
-  var question3 = new questionObject("What is the capital of Venezuela?", ["Merida", "Barquisimeto", "Caracas", "Maracaibo", null], 2, 4, false, false)
+  var question3 = new questionObject("What was the name of the first animal carried into orbit?", ["Laika - dog", "Tsygan - dog", "Dezik - dog", "Gordo - squirrel monkey", null], 0, 4, "this dog", false, false);
 
   return questionsArray = [question1, question2, question3];
 }
@@ -212,12 +213,11 @@ function setUserSelection(){
 function summarizeQuesiton(){
   if (currentQuestion.isCorrect){
     $(".modal-title").text("Good Job! You answered correctly!");
-    $(".modal-body").text(currentQuestion.correctAnswer);
-
   } else{
     $(".modal-title").text("Wrong answer... The correct answer is:")
-    $(".modal-body").text(currentQuestion.correctAnswer);
   }
+  $("#correctAnswer").text(currentQuestion.correctAnswer);
+  $("#answerExplanation").text(currentQuestion.answerExplanation);
 }
 
 function displaySummaryQuestion(){
