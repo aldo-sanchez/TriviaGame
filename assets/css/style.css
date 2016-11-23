@@ -1,0 +1,13 @@
+body{
+  /*background-image: url("../images/hexabump_@2X.png");*/
+  background-image: url("../images/dark_mosaic.png");
+  color: lightgray;
+}
+
+.answersButtons{
+  font-size: 20px;
+  margin: 3px;
+  background: none;
+  width: 100%;
+}
+

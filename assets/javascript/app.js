@@ -16,11 +16,14 @@ var questionTimer;
 var summaryTimer;
 
 $(document).ready(function(){
-  initialization();  
+  // initialization();  
 });
 
 function initialization(){
   player.isPlaying = !player.isPlaying;
+  gameStatus = [];
+  player.numberCorrect = 0;
+  player.numberIncorrect = 0;
   questionsArray = createQuestionArray();
 }
 
@@ -105,9 +108,14 @@ var mainQuestionColumn = $("<div></div>");
     id:"individualQuestionRow"
   });
 
+  var firstColumnDiv = $("<div></div>");
+  firstColumnDiv.attr({
+    class: "col-md-3 question"
+  });
+
   var questionColumnDiv = $("<div></div>");
   questionColumnDiv.attr({
-    class: "col-md-12 question",
+    class: "col-md-6 question",
     id: "individualQuestionColumn"
   });
 
@@ -115,6 +123,7 @@ var mainQuestionColumn = $("<div></div>");
   questionText.text(currentQuestion.question);
 
   questionText.appendTo(questionColumnDiv);
+  firstColumnDiv.appendTo(questionRowDiv);
   questionColumnDiv.appendTo(questionRowDiv);
   questionRowDiv.appendTo(mainQuestionColumn);
   mainQuestionColumn.appendTo("#questionRow");
@@ -133,19 +142,41 @@ function displayAnswers(){
       class: "row",
       id: "answerRow" + i
     })
+
+    var firstColumnDiv = $("<div></div>");
+    firstColumnDiv.attr({
+      class: "col-md-3",
+      id: "firstColumn" + i
+    });
+
+    var secondColumnDiv = $("<div></div>");
+    secondColumnDiv.attr({
+      class: "col-md-3",
+      id: "secondColumn" + i
+    });
     
     var answersColumnDiv = $("<div></div>");
     answersColumnDiv.attr({
-      class: "col-md-3 answers",
+      class: "col-md-6 answers",
       id: "answer" + i
     });
     var answersText = $("<h2></h2>"); 
-    answersText.text(currentQuestion.answers[i]);
+    // answersText.text(currentQuestion.answers[i]);
 
-    answersText.appendTo(answersColumnDiv);
-    answersColumnDiv.appendTo(answersRowDiv)
+    var answerButton = $("<button></button>");
+    answerButton.attr({
+      class: "answersButtons",
+      id: "answerButton" + i
+    })
+    answerButton.text(currentQuestion.answers[i]);
+
+    // answersText.appendTo(answersColumnDiv);
+    answerButton.appendTo(answersColumnDiv);
+    firstColumnDiv.appendTo(answersRowDiv);
+    answersColumnDiv.appendTo(answersRowDiv);
+    secondColumnDiv.appendTo(answersRowDiv);
     answersRowDiv.appendTo(mainAnswersColumn);
-    mainAnswersColumn.appendTo("#answersRow")
+    mainAnswersColumn.appendTo("#answersRow");
   };
 }
 
@@ -191,9 +222,12 @@ function summarizeQuesiton(){
 
 function displaySummaryQuestion(){
   $("#myModal").modal("show");  
+  // $("#startGameButton").show();
+
 }
 
 function displayFinalSummary(){
+  $("#startGameButton").show();
   var summaryColumn = $("<div></div>");
   summaryColumn.addClass("col-md-12");
   summaryColumn.attr("id", "summaryColumn");
@@ -246,16 +280,18 @@ function removeQuestionAnswers(){
 }
 
 $(document).on("click","#startGameButton", function(){
+  $("#summaryColumn").remove();
+  initialization();
   setQuestionAnswers();
   // startQuestionTimer();
   $("#startGameButton").hide();
 });
 
-$(document).on("click", ".answers", function(){
+$(document).on("click", ".answersButtons", function(){
   if (!player.isWaiting && player.isPlaying){
     console.log($(this).attr("id"));
     var selectedAnswer = $(this).attr("id");
-    selectedAnswer = parseInt(selectedAnswer.charAt(6));
+    selectedAnswer = parseInt(selectedAnswer.charAt(12));
     userSelection(selectedAnswer);
     setUserSelection();
     console.log(selectedAnswer);
