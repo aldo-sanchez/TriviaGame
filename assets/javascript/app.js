@@ -28,12 +28,13 @@ function initialization(){
 }
 
 function createQuestionArray(){
-  function questionObject(question, answers, correctAnswer, userAnswer, answerExplanation, isCorrect, isTimeUp){
+  function questionObject(question, answers, correctAnswer, userAnswer, answerExplanation, picture, isCorrect, isTimeUp){
     this.question = question;
     this.answers = answers;
     this.correctAnswer = this.answers[correctAnswer];
     this.userAnswer = this.answers[userAnswer];
     this.answerExplanation = answerExplanation;
+    this.picture = picture;
     this.isCorrect = isCorrect;
     this.isTimeUp = isTimeUp;
   }
@@ -44,16 +45,17 @@ function createQuestionArray(){
     /*correctAnswer:*/ 1,
     /*userAnswer:*/ 4,
     /*answerExplanation:*/ "After the failed launch of Vanguard TV3, and two successful Russian satellites (Sputnik 1 and 2), the United States successfully launched Explorer 1 on January 31, 1958.",
+    /*picture:*/ "assets/images/explorer1.jpg",
     /*isCorrect:*/ false,
     /*isTimeUp:*/ false);
     
-
   var question1 = new questionObject(
     /*question:*/ "What was the first animal in space?",
     /*answers:*/ ["Dog", "Monkey", "Fruit Flies", "Mouse", null],
     /*correctAnswer:*/ 2,
     /*userAnswer:*/ 4,
     /*answerExplanation:*/ "On February 20, 1947 the United States launched a V-2 rocket containing fruit flies, with the purpose of exploring the effects of radiation exposure at high altitudes.",
+    /*picture:*/ "assets/images/fruitflies.jpg",
     /*isCorrect:*/ false,
     /*isTimeUp:*/ false);
 
@@ -63,6 +65,7 @@ function createQuestionArray(){
     /*correctAnswer:*/ 0,
     /*userAnswer:*/ 4,
     /*answerExplanation:*/ "Laika was a stray dog from the streets of Moscow that was the sole occupant of Sputnik 2 (launched on November 3, 1957), and first animal to be set to orbit.",
+    /*picture:*/ "assets/images/laika.jpg",
     /*isCorrect:*/ false,
     /*isTimeUp:*/ false);
 
@@ -72,6 +75,7 @@ function createQuestionArray(){
     /*correctAnswer:*/ 1,
     /*userAnswer:*/ 4,
     /*answerExplanation:*/ "Soviet Yuri Gagarin was the first human in space when he completed an orbit of the Earth on April 12, 1961. His first words upon returning to Earth were to a woman and a girl near his capsule.  The woman asked, 'Can it be that you have come from outer space?' to which Gagarin replied: 'As a matter of fact, I have!'",
+    /*picture:*/ "assets/images/yuri-gagarin.jpg",
     /*isCorrect:*/ false,
     /*isTimeUp:*/ false);
 
@@ -81,6 +85,7 @@ function createQuestionArray(){
     /*correctAnswer:*/ 3,
     /*userAnswer:*/ 4,
     /*answerExplanation:*/ "Margaret Hamilton was the Director of the Software Engineering Division of the MIT Instrumentation Laboratory. On November 22, 2016, she was awarded the Presidential Medal of Freedom by President Obama for her work leading the development of on-board flight software for NASA's Apolo Moon missions",
+    /*picture:*/ "assets/images/margaret-hamilton.jpg",
     /*isCorrect:*/ false,
     /*isTimeUp:*/ false);
 
@@ -89,7 +94,8 @@ function createQuestionArray(){
     /*answers:*/ ["Voyager 1", "Voyager 2", "Pioneer 10", "Pioneer 11", null],
     /*correctAnswer:*/ 2,
     /*userAnswer:*/ 4,
-    /*answerExplanation:*/ "Developed at NASA's Ames Research Center, Pioneer 10 was designed to prepare NASA for the requirements of deep space travel of Voyager 1. It completed the first mission to Jupiter and was the first spacecraft to reach escape velocity from the Solar System. NASA received the last successful telemetry from Pioneer 10 on April 27, 2002; at that time the spacecraft was about 12 billion kilometers from Earth.",
+    /*answerExplanation:*/ "Developed at NASA's Ames Research Center, Pioneer 10 was designed to prepare NASA for the requirements of deep space travel of Voyager 1. It completed the first mission to Jupiter and was the first spacecraft to reach escape velocity from the Solar System. NASA received the last successful telemetry from Pioneer 10 on April 27, 2002; at that time the spacecraft was about 12 billion kilometers from Earth. Pioneer 10 included a plaque featuring symbols designed to provide information about the origin of the spacecraft to if it is ever found by intelligent life-forms",
+    /*picture:*/ "assets/images/pioneer10.jpg",
     /*isCorrect:*/ false,
     /*isTimeUp:*/ false);
 
@@ -99,6 +105,7 @@ function createQuestionArray(){
     /*correctAnswer:*/ 0,
     /*userAnswer:*/ 4,
     /*answerExplanation:*/ "Enterprise was the first orbiter of the Space Shuttle program. The orbiter was rolled out on September 17, 1976. Its goal was to perform atmospheric test flights.  Enterprise had no engines so for testing, the shuttle was launched from a modified Boeing 747.",
+    /*picture:*/ "assets/images/enterprise-shuttle.jpg",
     /*isCorrect:*/ false,
     /*isTimeUp:*/ false);
 
@@ -108,15 +115,17 @@ function createQuestionArray(){
     /*correctAnswer:*/ 3,
     /*userAnswer:*/ 4,
     /*answerExplanation:*/ "Robert H. Goddard is credited with building the first liquid-fueled rocket. He was very protective of his work after receiving little support from peers and his ideas being ridiculed by he press. Years after his death in 1945 he became recognized as the father of modern rocketry.",
+    /*picture:*/ "assets/images/goddard.jpg",
     /*isCorrect:*/ false,
     /*isTimeUp:*/ false);
 
   var question8 = new questionObject(
-    /*question:*/ "Mathematician, astronomer, and astrologer best known for his laws of planetary motion:",
+    /*question:*/ "Mathematician, astronomer, and astrologer best known for his laws of planetary motion still in use today:",
     /*answers:*/ ["Johannes Kepler", "Galileo Galilei", "Nicolaus Copernicus", "Isaac Newton", null],
     /*correctAnswer:*/ 0,
     /*userAnswer:*/ 4,
     /*answerExplanation:*/ "While Ptolemy's planetary system was good enough for most calculations, Mars was a planet that did not seem to perfectly fit the system. Using Tycho Brahe's data, Kepler was able to fit all planets in one perfect system where the Sun is at the center of the Solar System, and the planets follow an elleptical orbit. Kepler would never be satisfied with his own system (still in use today), because he could not believe God had created imperfect orbits (elliptical) rather than perfect ones (circular).",
+    /*picture:*/ "assets/images/kepler.jpg",
     /*isCorrect:*/ false,
     /*isTimeUp:*/ false);
 
@@ -126,11 +135,13 @@ function createQuestionArray(){
     /*correctAnswer:*/ 3,
     /*userAnswer:*/ 4,
     /*answerExplanation:*/ "Named after astronomer Giovanni Cassini, the Cassini spacecraft was launched on October 15, 1997 and entered orbit around Saturn on July 1, 2004. The mission included a probe named after astronomer Christian Huygens, that landed on Saturn's moon Titan  on January 14, 2005. The mission is expected to end in 2017, by the spacecraft flying into Saturn.",
+    /*picture:*/ "assets/images/cassini.jpg",
     /*isCorrect:*/ false,
     /*isTimeUp:*/ false);
     
 
   return questionsArray = [question0, question1, question2, question3, question4, question5, question6, question7, question8, question9];
+  // return questionsArray = [question0];
 }
 
 function startQuestionTimer(){
@@ -143,7 +154,7 @@ function startSummaryTimer(){
    summaryTimer = setTimeout(setQuestionAnswers,3000);
   }
   else{
-    summaryTimer = setTimeout(endGame,3000);
+    summaryTimer = setTimeout(endGame,5000);
   }
 }
 
@@ -265,6 +276,10 @@ function displayAnswers(){
     answersRowDiv.appendTo(mainAnswersColumn);
     mainAnswersColumn.appendTo("#answersRow");
   };
+
+  $('html, body').animate({
+      scrollTop: $("#answerButton3").offset().top
+}, 2000);
 }
 
 function userSelection(i){
@@ -299,10 +314,15 @@ function setUserSelection(){
 function summarizeQuesiton(){
   if (currentQuestion.isCorrect){
     $(".modal-title").text("Good Job! You answered correctly!");
-  } else{
+  } 
+  else if(!currentQuestion.isCorrect && !currentQuestion.isTimeUp){
     $(".modal-title").text("Wrong answer... The correct answer is:")
   }
+  else if(isTimeUp){
+    $(".modal-title").text("Time's Up!")
+  }
   $("#correctAnswer").text(currentQuestion.correctAnswer);
+  $(".picture").attr("src",currentQuestion.picture);
   $("#answerExplanation").text(currentQuestion.answerExplanation);
 }
 

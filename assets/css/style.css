@@ -11,3 +11,12 @@ body{
   width: 100%;
 }
 
+.picture{
+  max-height: 300px;
+  max-width: 200px;
+}
+
+.modal-body{
+  overflow: hidden;
+}
+
