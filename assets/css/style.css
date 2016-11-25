@@ -43,6 +43,7 @@ h1.jumboContentTitle{
 .picture{
   max-height: 300px;
   max-width: 200px;
+  text-align: center;
 }
 
 .modal-body{
