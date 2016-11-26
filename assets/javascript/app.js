@@ -12,8 +12,28 @@ var player = {
 var questionsArray = [];
 var currentQuestion;
 var gameStatus = [];
+
+// timer variables.  timer = variable for javascript timer.  time = variables for actual time.
 var questionTimer;
 var summaryTimer;
+var timeQuestion = 10000;
+var timeSummary = 15000;
+var time = 0;
+var counter;
+
+var timeProgress = {
+  start: function(){
+    counter = setInterval(timeProgress.count,1000);
+  },
+  stop: function(){
+    clearInterval(counter);
+    time = 0;
+  },
+  count: function(){
+    time++;
+    console.log(time);
+  }
+}
 
 $(document).ready(function(){
   // initialization();  
@@ -145,17 +165,21 @@ function createQuestionArray(){
 }
 
 function startQuestionTimer(){
-  questionTimer = setTimeout(questionTimeRanOut,10000);
+  timeProgress.stop();
+  questionTimer = setTimeout(questionTimeRanOut,timeQuestion);
+  timeProgress.start(); 
 }
 
 function startSummaryTimer(){
+  timeProgress.stop();
   player.isWaiting = !player.isWaiting;
   if (questionsArray.length > 0){
-   summaryTimer = setTimeout(setQuestionAnswers,3000);
+   summaryTimer = setTimeout(setQuestionAnswers,timeSummary);
   }
   else{
-    summaryTimer = setTimeout(endGame,5000);
+    summaryTimer = setTimeout(endGame,timeSummary);
   }
+  timeProgress.start();
 }
 
 function stopQuestionTimer(){
@@ -193,7 +217,32 @@ function selectRandomQuestion(){
   questionsArray.splice(randomIndex,1);
 }
 
+function displayTimeBar(){
+  var timeBarColumn = $("<div></div>");
+  timeBarColumn.attr({
+    class: "col-md-12",
+    id: "timeBarColumn"
+  });
+  
+  var timeBar = $("<div></div>");
+  timeBar.attr({
+    class: "progress-bar",
+    id: "timeBar",
+    role: "progress-bar",
+    ariavaluenow: time,
+    ariavaluemin: "0",
+    ariavaluemax: timeQuestion
+  })
+
+  timeBar.css("width", (time/timeQuestion)*100 + "%");
+
+  timeBar.text(time);
+  timeBarColumn.appendTo("#timeBarRow");
+  timeBar.appendTo(timeBarColumn);   
+}
+
 function displayQuestion(){
+  // displayTimeBar();
 var mainQuestionColumn = $("<div></div>");
   mainQuestionColumn.attr({
     class: "col-md-12",
@@ -318,7 +367,7 @@ function summarizeQuesiton(){
   else if(!currentQuestion.isCorrect && !currentQuestion.isTimeUp){
     $(".modal-title").text("Wrong answer... The correct answer is:")
   }
-  else if(isTimeUp){
+  else if(currentQuestion.isTimeUp){
     $(".modal-title").text("Time's Up!")
   }
   $("#correctAnswer").text(currentQuestion.correctAnswer);
