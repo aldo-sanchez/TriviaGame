@@ -217,29 +217,29 @@ function selectRandomQuestion(){
   questionsArray.splice(randomIndex,1);
 }
 
-function displayTimeBar(){
-  var timeBarColumn = $("<div></div>");
-  timeBarColumn.attr({
-    class: "col-md-12",
-    id: "timeBarColumn"
-  });
+// function displayTimeBar(){
+//   var timeBarColumn = $("<div></div>");
+//   timeBarColumn.attr({
+//     class: "col-md-12",
+//     id: "timeBarColumn"
+//   });
   
-  var timeBar = $("<div></div>");
-  timeBar.attr({
-    class: "progress-bar",
-    id: "timeBar",
-    role: "progress-bar",
-    ariavaluenow: time,
-    ariavaluemin: "0",
-    ariavaluemax: timeQuestion
-  })
+//   var timeBar = $("<div></div>");
+//   timeBar.attr({
+//     class: "progress-bar",
+//     id: "timeBar",
+//     role: "progress-bar",
+//     ariavaluenow: time,
+//     ariavaluemin: "0",
+//     ariavaluemax: timeQuestion
+//   })
 
-  timeBar.css("width", (time/timeQuestion)*100 + "%");
+//   timeBar.css("width", (time/timeQuestion)*100 + "%");
 
-  timeBar.text(time);
-  timeBarColumn.appendTo("#timeBarRow");
-  timeBar.appendTo(timeBarColumn);   
-}
+//   timeBar.text(time);
+//   timeBarColumn.appendTo("#timeBarRow");
+//   timeBar.appendTo(timeBarColumn);   
+// }
 
 function displayQuestion(){
   // displayTimeBar();
@@ -383,6 +383,7 @@ function displaySummaryQuestion(){
 
 function displayFinalSummary(){
   $("#startGameButton").show();
+  $("#pressStartText").show();
   var summaryColumn = $("<div></div>");
   summaryColumn.addClass("col-md-12");
   summaryColumn.attr("id", "summaryColumn");
@@ -440,6 +441,7 @@ $(document).on("click","#startGameButton", function(){
   setQuestionAnswers();
   // startQuestionTimer();
   $("#startGameButton").hide();
+  $("#pressStartText").hide();
 });
 
 $(document).on("click", ".answersButtons", function(){

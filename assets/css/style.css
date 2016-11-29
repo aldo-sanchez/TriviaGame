@@ -46,6 +46,10 @@ h1.jumboContentTitle{
   text-align: center;
 }
 
+.modal-content{
+  color: black;
+}
+
 .modal-body{
   overflow: hidden;
 }
